@@ -4,7 +4,7 @@ template <typename T>
 struct Elem {
     T data;
     Elem<T>* next;
-    Elem(const T& _data) : data{_data}, next{nullptr} { }
+    explicit Elem(const T& _data) : data{_data}, next{nullptr} { }
     Elem(const T& _data, Elem<T>* _next) : data{_data}, next{_next} { }
 };
 
