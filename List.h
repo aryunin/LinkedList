@@ -16,6 +16,7 @@ public:
     List() : head{nullptr}, last{nullptr} { }
     void add(const T&);
     void del(const size_t);
+    T get(const size_t);
 };
 
 template <typename T>
@@ -32,13 +33,23 @@ void List<T>::add(const T &data) {
 
 template <typename T>
 void List<T>::del(const size_t idx) {
-    T* current{head};
+    Elem<T>* current{head};
     for(size_t i {0}; i < idx - 1; i++) {
         if(!current->next) throw std::out_of_range{"invalid index"};
         current = current->next;
     }
     if(!current->next) throw std::out_of_range{"invalid index"};
-    T* tmp {current->next->next};
+    Elem<T>* tmp {current->next->next};
     delete current->next;
     current->next = tmp;
+}
+
+template <typename T>
+T List<T>::get(const size_t idx) {
+    Elem<T>* current{head};
+    for(size_t i {0}; i < idx; i++) {
+        if(!current->next) throw std::out_of_range{"invalid index"};
+        current = current->next;
+    }
+    return current->data;
 }
