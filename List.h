@@ -4,6 +4,7 @@ template <typename T>
 struct Elem {
     T data;
     Elem<T>* next;
+    Elem(const T& _data) : data{_data}, next{nullptr} { }
 };
 
 template <typename T>
