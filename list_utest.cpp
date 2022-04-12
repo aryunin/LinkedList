@@ -35,3 +35,13 @@ TEST_F(ListFixture, DelTest) {
 
     ASSERT_THROW(testList.del(1), std::out_of_range);
 }
+
+TEST_F(ListFixture, InsertTest) {
+    testList.insert(13, 1);
+    testList.insert(25, 4);
+
+    ASSERT_EQ(testList.get(1), 13);
+    ASSERT_EQ(testList.get(4), 25);
+
+    ASSERT_THROW(testList.insert(100, 6), std::out_of_range);
+}
