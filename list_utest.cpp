@@ -1,2 +1,37 @@
 #include "gtest/gtest.h"
 #include "List.h"
+#include <iostream>
+
+struct ListFixture : public testing::Test {
+    const size_t size = 10;
+    List<int> testList;
+
+    void SetUp() override {
+        testList.add(10);
+        testList.add(15);
+        testList.add(20);
+    }
+
+    void TearDown() override {
+
+    }
+};
+
+TEST_F(ListFixture, AddGetTest) {
+    ASSERT_EQ(testList.get(0), 10);
+    ASSERT_EQ(testList.get(1), 15);
+    ASSERT_EQ(testList.get(2), 20);
+
+    ASSERT_THROW(testList.get(3), std::out_of_range);
+}
+
+TEST_F(ListFixture, DelTest) {
+    testList.del(1);
+    ASSERT_EQ(testList.get(0), 10);
+    ASSERT_EQ(testList.get(1), 20);
+
+    testList.del(1);
+    ASSERT_EQ(testList.get(0), 10);
+
+    ASSERT_THROW(testList.del(1), std::out_of_range);
+}
