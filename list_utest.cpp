@@ -45,3 +45,16 @@ TEST_F(ListFixture, InsertTest) {
 
     ASSERT_THROW(testList.insert(100, 6), std::out_of_range);
 }
+
+TEST_F(ListFixture, IteratorTest) {
+    ASSERT_THROW(Iterator<int> emptyIt {nullptr}, std::out_of_range);
+
+    Iterator<int> it {testList.firstIterator()};
+    ASSERT_EQ(it.get(), testList.get(0));
+    for(size_t i {1}; it.hasNext(); i++) {
+        it.next();
+        ASSERT_EQ(it.get(), testList.get(i));
+    }
+
+    ASSERT_THROW(it.next(), std::out_of_range);
+}
