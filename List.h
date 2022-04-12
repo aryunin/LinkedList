@@ -14,5 +14,14 @@ private:
     Elem<T>* last;
 public:
     List() : head{nullptr}, last{nullptr} { }
-
+    void add(const T& data) {
+        if(!head) {
+            head = new Elem<T>{data};
+            last = head;
+        }
+        else {
+            last->next = new Elem<T>{data};
+            last = last->next;
+        }
+    }
 };
