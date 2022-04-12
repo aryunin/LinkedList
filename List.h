@@ -5,6 +5,7 @@ struct Elem {
     T data;
     Elem<T>* next;
     Elem(const T& _data) : data{_data}, next{nullptr} { }
+    Elem(const T& _data, Elem<T>* _next) : data{_data}, next{_next} { }
 };
 
 template <typename T>
@@ -15,6 +16,7 @@ private:
 public:
     List() : head{nullptr}, last{nullptr} { }
     void add(const T&);
+    void insert(const T&, const size_t);
     void del(const size_t);
     T get(const size_t);
 };
@@ -29,6 +31,16 @@ void List<T>::add(const T &data) {
         last->next = new Elem<T>{data};
         last = last->next;
     }
+}
+
+template <typename T>
+void List<T>::insert(const T& val, const size_t idx) {
+    Elem<T>* current{head};
+    for(size_t i {0}; i < idx - 1; i++) {
+        if(!current->next) throw std::out_of_range{"invalid index"};
+        current = current->next;
+    }
+    current->next = new Elem<T>{val, current->next};
 }
 
 template <typename T>
