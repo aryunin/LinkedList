@@ -2,7 +2,7 @@
 #include "List.h"
 #include <iostream>
 
-struct ListFixture : public testing::Test {
+struct ListFixture : public ::testing::Test {
     const size_t size = 10;
     List<int> testList;
 
