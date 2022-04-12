@@ -1,9 +1,15 @@
 #pragma once
 
 template <typename T>
-struct Elem {
+class List;
+
+template <typename T>
+class Elem {
+    friend class List<T>;
+private:
     T data;
     Elem<T>* next;
+public:
     explicit Elem(const T& _data) : data{_data}, next{nullptr} { }
     Elem(const T& _data, Elem<T>* _next) : data{_data}, next{_next} { }
 };
@@ -16,9 +22,9 @@ private:
 public:
     List() : head{nullptr}, last{nullptr} { }
     void add(const T&);
-    void insert(const T&, const size_t);
-    void del(const size_t);
-    T get(const size_t);
+    void insert(const T&, size_t);
+    void del(size_t);
+    T get(size_t);
 };
 
 template <typename T>
