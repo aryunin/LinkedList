@@ -45,6 +45,7 @@ private:
     size_t size;
 public:
     List() : head{nullptr}, last{nullptr}, size{0} { }
+    ~List();
     void add(const T&);
     void insert(const T&, size_t);
     void del(size_t);
@@ -53,6 +54,16 @@ public:
         return Iterator<T>{head};
     }
 };
+
+template <typename T>
+List<T>::~List() {
+    Elem<T>* tmp;
+    while(head) {
+        tmp = head->next;
+        delete head;
+        head = tmp;
+    }
+}
 
 template <typename T>
 void List<T>::add(const T &data) {
