@@ -42,8 +42,9 @@ class List {
 private:
     Elem<T>* head;
     Elem<T>* last;
+    size_t size;
 public:
-    List() : head{nullptr}, last{nullptr} { }
+    List() : head{nullptr}, last{nullptr}, size{0} { }
     void add(const T&);
     void insert(const T&, size_t);
     void del(size_t);
@@ -63,6 +64,7 @@ void List<T>::add(const T &data) {
         last->next = new Elem<T>{data};
         last = last->next;
     }
+    ++size;
 }
 
 template <typename T>
@@ -73,6 +75,7 @@ void List<T>::insert(const T& val, const size_t idx) {
         current = current->next;
     }
     current->next = new Elem<T>{val, current->next};
+    ++size;
 }
 
 template <typename T>
@@ -86,6 +89,7 @@ void List<T>::del(const size_t idx) {
     Elem<T>* tmp {current->next->next};
     delete current->next;
     current->next = tmp;
+    --size;
 }
 
 template <typename T>
