@@ -69,35 +69,41 @@ void List<T>::add(const T &data) {
 
 template <typename T>
 void List<T>::insert(const T& val, const size_t idx) {
-    Elem<T>* current{head};
-    for(size_t i {0}; i < idx - 1; i++) {
-        if(!current->next) throw std::out_of_range{"invalid index"};
-        current = current->next;
+    if(idx > size) throw std::out_of_range{"invalid index"};
+    if(idx == 0) head = new Elem<T>{val, head};
+    else {
+        Elem<T> *current{head};
+        for (size_t i{0}; i < idx - 1; i++)
+            current = current->next;
+        current->next = new Elem<T>{val, current->next};
     }
-    current->next = new Elem<T>{val, current->next};
     ++size;
 }
 
 template <typename T>
 void List<T>::del(const size_t idx) {
-    Elem<T>* current{head};
-    for(size_t i {0}; i < idx - 1; i++) {
-        if(!current->next) throw std::out_of_range{"invalid index"};
-        current = current->next;
+    if(idx >= size) throw std::out_of_range{"invalid index"};
+    if(idx == 0) {
+        Elem<T>* tmp {head};
+        head = head->next;
+        delete tmp;
     }
-    if(!current->next) throw std::out_of_range{"invalid index"};
-    Elem<T>* tmp {current->next->next};
-    delete current->next;
-    current->next = tmp;
+    else {
+        Elem<T> *current{head};
+        for (size_t i{0}; i < idx - 1; i++)
+            current = current->next;
+        Elem<T> *tmp{current->next->next};
+        delete current->next;
+        current->next = tmp;
+    }
     --size;
 }
 
 template <typename T>
 T List<T>::get(const size_t idx) const {
+    if(idx >= size) throw std::out_of_range{"invalid index"};
     Elem<T>* current{head};
-    for(size_t i {0}; i < idx; i++) {
-        if(!current->next) throw std::out_of_range{"invalid index"};
+    for(size_t i {0}; i < idx; i++)
         current = current->next;
-    }
     return current->data;
 }
